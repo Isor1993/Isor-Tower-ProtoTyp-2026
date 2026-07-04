@@ -116,7 +116,7 @@ SkinnedMeshRenderer:
   m_Quality: 0
   m_UpdateWhenOffscreen: 0
   m_SkinnedMotionVectors: 1
-  m_Mesh: {fileID: 4300002, guid: c0d8a19c260774d428c9ffead3796f08, type: 3}
+  m_Mesh: {fileID: 5355917317793006552, guid: c0d8a19c260774d428c9ffead3796f08, type: 3}
   m_Bones:
   - {fileID: 1910806312017088716}
   - {fileID: 1368414059548036269}
@@ -201,10 +201,10 @@ Animator:
   m_Controller: {fileID: 9100000, guid: b44d55d3a669d654498cc4a4b05655ea, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
+  m_AnimatePhysics: 1
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
