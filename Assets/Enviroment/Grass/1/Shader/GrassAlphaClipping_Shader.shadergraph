@@ -853,7 +853,7 @@
     },
     "m_PreviewData": {
         "serializedMesh": {
-            "m_SerializedMesh": "{\"mesh\":{\"fileID\":-462981019419857548,\"guid\":\"8a8b4fcf04297554383c167310cc9c18\",\"type\":3}}",
+            "m_SerializedMesh": "{\"mesh\":{\"fileID\":-462981019419857548,\"guid\":\"afdbddcce733e274983b1cca083cb663\",\"type\":3}}",
             "m_Guid": ""
         },
         "preventRotation": false
@@ -5704,7 +5704,7 @@
     "m_Hidden": false,
     "m_PerRendererData": false,
     "m_customAttributes": [],
-    "m_Value": 0.0,
+    "m_Value": 0.5,
     "m_FloatType": 1,
     "m_LiteralFloatMode": false,
     "m_RangeValues": {
@@ -5795,7 +5795,7 @@
     "m_Hidden": false,
     "m_PerRendererData": false,
     "m_customAttributes": [],
-    "m_Value": 0.46000000834465029,
+    "m_Value": 0.5299999713897705,
     "m_FloatType": 1,
     "m_LiteralFloatMode": false,
     "m_RangeValues": {
@@ -6168,8 +6168,8 @@
     "m_ObjectId": "fcc81128b440405f8f1842c4ac0b1286",
     "m_Title": "Height Bend Mask/ Lock Grass Base",
     "m_Position": {
-        "x": -2675.000244140625,
-        "y": -661.0000610351563
+        "x": -2675.0,
+        "y": -661.0
     }
 }
 

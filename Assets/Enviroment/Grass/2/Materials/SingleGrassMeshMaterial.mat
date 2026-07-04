@@ -95,7 +95,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _AO: 40.3
+    - _AO: 1
     - _AddPrecomputedVelocity: 0
     - _AlphaClip: 0
     - _AlphaToMask: 0
@@ -123,7 +123,7 @@ Material:
     - _MaskDensity: 1.6
     - _MaskOn: 1
     - _MaskSeed: 4.74
-    - _MaskVisibilty: 0.5
+    - _MaskVisibilty: 1.2
     - _Metallic: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.005

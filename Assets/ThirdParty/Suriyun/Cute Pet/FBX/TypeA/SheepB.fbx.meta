@@ -3,7 +3,12 @@ guid: c0d8a19c260774d428c9ffead3796f08
 ModelImporter:
   serializedVersion: 24501
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: sheep_B
+    second: {fileID: 2100000, guid: 4fb368d870006e44ebffe963a3135330, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0
