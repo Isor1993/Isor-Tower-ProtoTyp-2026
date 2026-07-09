@@ -6715,7 +6715,7 @@ VisualEffect:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1759380130}
   m_Enabled: 1
-  m_Asset: {fileID: 8926484042661614526, guid: 10025602556252b42992b74df32c87b0, type: 3}
+  m_Asset: {fileID: 8926484042661614526, guid: a41c1e5f09827d946b520bb8705353ed, type: 3}
   m_InitialEventName: OnPlay
   m_InitialEventNameOverriden: 0
   m_StartSeed: 0
@@ -6725,7 +6725,25 @@ VisualEffect:
   m_ResourceVersion: 1
   m_PropertySheet:
     m_Float:
-      m_Array: []
+      m_Array:
+      - m_Value: 90
+        m_Name: SpawnRate
+        m_Overridden: 0
+      - m_Value: 0.15
+        m_Name: Particle Size Min
+        m_Overridden: 0
+      - m_Value: 0.095
+        m_Name: Flame Form Size
+        m_Overridden: 1
+      - m_Value: 1
+        m_Name: Octaves
+        m_Overridden: 1
+      - m_Value: 0.5
+        m_Name: Roughness
+        m_Overridden: 1
+      - m_Value: 0.52
+        m_Name: Drag
+        m_Overridden: 1
     m_Vector2f:
       m_Array: []
     m_Vector3f:
@@ -6747,6 +6765,9 @@ VisualEffect:
       - m_Value: {fileID: 2800000, guid: 4806d2548b64f4018b347f2837f01fff, type: 3}
         m_Name: Texture 2D
         m_Overridden: 1
+      - m_Value: {fileID: 10307, guid: 0000000000000000f000000000000000, type: 0}
+        m_Name: 2d Particle Texture
+        m_Overridden: 1
     m_Bool:
       m_Array: []
 --- !u!4 &1759380133
@@ -6758,9 +6779,9 @@ Transform:
   m_GameObject: {fileID: 1759380130}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 306.99, y: 54.99, z: 811.54}
+  m_LocalPosition: {x: 306.99, y: 55.272, z: 811.54}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -8324,7 +8345,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -8543,11 +8564,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1059472423824463399, guid: ef38991aa76ebe14684db518c56db503, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -5.6120644
+      value: -5.67
       objectReference: {fileID: 0}
     - target: {fileID: 1059472423824463399, guid: ef38991aa76ebe14684db518c56db503, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -17.34
+      value: -22.9
       objectReference: {fileID: 0}
     - target: {fileID: 1059472423824463399, guid: ef38991aa76ebe14684db518c56db503, type: 3}
       propertyPath: m_LocalRotation.w
