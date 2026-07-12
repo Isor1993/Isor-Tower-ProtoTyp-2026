@@ -16,6 +16,7 @@
 
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.VFX;
 
 /// <summary>
 /// Defines the role of a sheep inside a herd.
@@ -58,6 +59,9 @@ public class Sheep : MonoBehaviour, IDayNightListener
 
     [Tooltip("Role of this sheep inside the herd.")]
     [SerializeField] private SheepType _typ;
+
+    [Tooltip("Visual effect that renders the run dust while the sheep is fleeing.")]
+    [SerializeField] private VisualEffect _fleeDustVfx;
 
     [Header("Testing Settings")]
     [Tooltip("Determines whether this sheep is currently tamed by the player.")]
@@ -299,6 +303,21 @@ public class Sheep : MonoBehaviour, IDayNightListener
 
         transform.position = _graveyardPosition.position;
         _visualRoot.enabled = true;
+    }
+
+    /// <summary>
+    /// Enables or disables the run dust visual effect.
+    /// </summary>
+    /// <param name="isActive">True to start emitting dust; false to stop.</param>
+    public void SetDustEmission(bool isActive)
+    {
+        if (_fleeDustVfx == null)
+            return;
+
+        if (isActive)
+            _fleeDustVfx.Play();
+        else
+            _fleeDustVfx.Stop();
     }
 
     /// <summary>

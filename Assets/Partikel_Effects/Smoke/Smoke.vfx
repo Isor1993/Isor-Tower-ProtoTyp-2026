@@ -96,34 +96,18 @@ MonoBehaviour:
     max: Infinity
     enumValues: []
     descendantCount: 0
-  - name: Smoke 2D Texture
-    path: Smoke 2D Texture
+  - name: Smoke Lifetime Max
+    path: Smoke Lifetime Max
     tooltip: 
     space: -1
     spaceable: 0
-    sheetType: m_NamedObject
-    realType: Texture2D
+    sheetType: m_Float
+    realType: Single
     defaultValue:
       m_Type:
-        m_SerializableType: UnityEngine.Texture2D, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: '{"obj":{"fileID":10307,"guid":"0000000000000000f000000000000000","type":0}}'
-    min: -Infinity
-    max: Infinity
-    enumValues: []
-    descendantCount: 0
-  - name: Smoke Spawn Rate
-    path: Smoke Spawn Rate
-    tooltip: 
-    space: -1
-    spaceable: 0
-    sheetType: m_Int
-    realType: Int32
-    defaultValue:
-      m_Type:
-        m_SerializableType: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
+        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
           PublicKeyToken=b77a5c561934e089
-      m_SerializableObject: 40
+      m_SerializableObject: 4
     min: -Infinity
     max: Infinity
     enumValues: []
@@ -144,50 +128,18 @@ MonoBehaviour:
     max: Infinity
     enumValues: []
     descendantCount: 0
-  - name: Smoke Lifetime Max
-    path: Smoke Lifetime Max
+  - name: Smoke 2D Texture
+    path: Smoke 2D Texture
     tooltip: 
     space: -1
     spaceable: 0
-    sheetType: m_Float
-    realType: Single
+    sheetType: m_NamedObject
+    realType: Texture2D
     defaultValue:
       m_Type:
-        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-          PublicKeyToken=b77a5c561934e089
-      m_SerializableObject: 4
-    min: -Infinity
-    max: Infinity
-    enumValues: []
-    descendantCount: 0
-  - name: Smoke Velocity Range Min
-    path: Smoke Velocity Range Min
-    tooltip: 
-    space: -1
-    spaceable: 0
-    sheetType: m_Vector3f
-    realType: Vector3
-    defaultValue:
-      m_Type:
-        m_SerializableType: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
+        m_SerializableType: UnityEngine.Texture2D, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: '{"x":0.20000000298023225,"y":0.15000000596046449,"z":0.20000000298023225}'
-    min: -Infinity
-    max: Infinity
-    enumValues: []
-    descendantCount: 0
-  - name: Smoke Velocity Range Max
-    path: Smoke Velocity Range Max
-    tooltip: 
-    space: -1
-    spaceable: 0
-    sheetType: m_Vector3f
-    realType: Vector3
-    defaultValue:
-      m_Type:
-        m_SerializableType: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: '{"x":-0.20000000298023225,"y":0.5,"z":-0.20000000298023225}'
+      m_SerializableObject: '{"obj":{"fileID":10307,"guid":"0000000000000000f000000000000000","type":0}}'
     min: -Infinity
     max: Infinity
     enumValues: []
@@ -284,6 +236,54 @@ MonoBehaviour:
         m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
           PublicKeyToken=b77a5c561934e089
       m_SerializableObject: 1
+    min: -Infinity
+    max: Infinity
+    enumValues: []
+    descendantCount: 0
+  - name: Smoke Spawn Rate
+    path: Smoke Spawn Rate
+    tooltip: 
+    space: -1
+    spaceable: 0
+    sheetType: m_Int
+    realType: Int32
+    defaultValue:
+      m_Type:
+        m_SerializableType: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089
+      m_SerializableObject: 40
+    min: -Infinity
+    max: Infinity
+    enumValues: []
+    descendantCount: 0
+  - name: Smoke Velocity Range Max
+    path: Smoke Velocity Range Max
+    tooltip: 
+    space: -1
+    spaceable: 0
+    sheetType: m_Vector3f
+    realType: Vector3
+    defaultValue:
+      m_Type:
+        m_SerializableType: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+      m_SerializableObject: '{"x":-0.20000000298023225,"y":0.5,"z":-0.20000000298023225}'
+    min: -Infinity
+    max: Infinity
+    enumValues: []
+    descendantCount: 0
+  - name: Smoke Velocity Range Min
+    path: Smoke Velocity Range Min
+    tooltip: 
+    space: -1
+    spaceable: 0
+    sheetType: m_Vector3f
+    realType: Vector3
+    defaultValue:
+      m_Type:
+        m_SerializableType: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+      m_SerializableObject: '{"x":0.20000000298023225,"y":0.15000000596046449,"z":0.20000000298023225}'
     min: -Infinity
     max: Infinity
     enumValues: []
@@ -3905,7 +3905,7 @@ MonoBehaviour:
   - {fileID: 8926484042661614654}
   m_ExposedName: Smoke Lifetime Max
   m_Exposed: 1
-  m_Order: 3
+  m_Order: 0
   m_Category: Smoek Settigs
   m_Min:
     m_Type:
@@ -3986,7 +3986,7 @@ MonoBehaviour:
   - {fileID: 8926484042661614656}
   m_ExposedName: Smoke Lifetime Min
   m_Exposed: 1
-  m_Order: 2
+  m_Order: 1
   m_Category: Smoek Settigs
   m_Min:
     m_Type:
@@ -4067,7 +4067,7 @@ MonoBehaviour:
   - {fileID: 8926484042661614658}
   m_ExposedName: Smoke 2D Texture
   m_Exposed: 1
-  m_Order: 0
+  m_Order: 2
   m_Category: Smoek Settigs
   m_Min:
     m_Type:
@@ -4148,7 +4148,7 @@ MonoBehaviour:
   - {fileID: 8926484042661614660}
   m_ExposedName: Smoke Arc
   m_Exposed: 1
-  m_Order: 6
+  m_Order: 3
   m_Category: Smoek Settigs
   m_Min:
     m_Type:
@@ -4231,7 +4231,7 @@ MonoBehaviour:
   - {fileID: 8926484042661614662}
   m_ExposedName: Smoke Position Shape Radius
   m_Exposed: 1
-  m_Order: 7
+  m_Order: 4
   m_Category: Smoek Settigs
   m_Min:
     m_Type:
@@ -4312,7 +4312,7 @@ MonoBehaviour:
   - {fileID: 8926484042661614664}
   m_ExposedName: Smoke Position
   m_Exposed: 1
-  m_Order: 8
+  m_Order: 5
   m_Category: Smoek Settigs
   m_Min:
     m_Type:
@@ -4495,7 +4495,7 @@ MonoBehaviour:
   - {fileID: 8926484042661614669}
   m_ExposedName: Smoke Position Angel
   m_Exposed: 1
-  m_Order: 9
+  m_Order: 6
   m_Category: Smoek Settigs
   m_Min:
     m_Type:
@@ -4678,7 +4678,7 @@ MonoBehaviour:
   - {fileID: 8926484042661614674}
   m_ExposedName: Smoke Turbulence Drag
   m_Exposed: 1
-  m_Order: 10
+  m_Order: 7
   m_Category: Smoek Settigs
   m_Min:
     m_Type:
@@ -4759,7 +4759,7 @@ MonoBehaviour:
   - {fileID: 8926484042661614676}
   m_ExposedName: Smoke Turbulence Frequency
   m_Exposed: 1
-  m_Order: 11
+  m_Order: 8
   m_Category: Smoek Settigs
   m_Min:
     m_Type:
@@ -4840,7 +4840,7 @@ MonoBehaviour:
   - {fileID: 8926484042661614678}
   m_ExposedName: Smoke Spawn Rate
   m_Exposed: 1
-  m_Order: 1
+  m_Order: 9
   m_Category: Smoek Settigs
   m_Min:
     m_Type:
@@ -4921,7 +4921,7 @@ MonoBehaviour:
   - {fileID: 8926484042661614680}
   m_ExposedName: Smoke Velocity Range Max
   m_Exposed: 1
-  m_Order: 5
+  m_Order: 10
   m_Category: Smoek Settigs
   m_Min:
     m_Type:
@@ -5105,7 +5105,7 @@ MonoBehaviour:
   - {fileID: 8926484042661614685}
   m_ExposedName: Smoke Velocity Range Min
   m_Exposed: 1
-  m_Order: 4
+  m_Order: 11
   m_Category: Smoek Settigs
   m_Min:
     m_Type:

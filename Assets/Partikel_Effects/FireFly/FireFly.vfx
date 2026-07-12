@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: VFXUI
   m_EditorClassIdentifier: 
   groupInfos:
-  - title: FireWork
+  - title: FireFly
     position:
       serializedVersion: 2
       x: 1618
@@ -1934,7 +1934,8 @@ MonoBehaviour:
       m_SerializableType: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
   m_Direction: 0
-  m_LinkedSlots: []
+  m_LinkedSlots:
+  - {fileID: 8926484042661617936}
 --- !u!114 &8926484042661617923
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2069,7 +2070,8 @@ MonoBehaviour:
       m_SerializableType: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
   m_Direction: 0
-  m_LinkedSlots: []
+  m_LinkedSlots:
+  - {fileID: 8926484042661617941}
 --- !u!114 &8926484042661617927
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2185,7 +2187,7 @@ MonoBehaviour:
   m_Parent: {fileID: 114350483966674976}
   m_Children: []
   m_UIPosition: {x: 0, y: 0}
-  m_UICollapsed: 1
+  m_UICollapsed: 0
   m_UISuperCollapsed: 0
   m_InputSlots: []
   m_OutputSlots:
@@ -2208,9 +2210,12 @@ MonoBehaviour:
   m_Tooltip: 
   m_Nodes:
   - m_Id: 0
-    linkedSlots: []
-    position: {x: 1222, y: -674}
-    expandedSlots: []
+    linkedSlots:
+    - outputSlot: {fileID: 8926484042661617936}
+      inputSlot: {fileID: 8926484042661617922}
+    position: {x: 1223, y: -757}
+    expandedSlots:
+    - {fileID: 8926484042661617936}
     expanded: 1
     supecollapsed: 0
 --- !u!114 &8926484042661617936
@@ -2249,7 +2254,8 @@ MonoBehaviour:
       m_SerializableType: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
   m_Direction: 1
-  m_LinkedSlots: []
+  m_LinkedSlots:
+  - {fileID: 8926484042661617922}
 --- !u!114 &8926484042661617937
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2365,7 +2371,7 @@ MonoBehaviour:
   m_Parent: {fileID: 114350483966674976}
   m_Children: []
   m_UIPosition: {x: 0, y: 0}
-  m_UICollapsed: 1
+  m_UICollapsed: 0
   m_UISuperCollapsed: 0
   m_InputSlots: []
   m_OutputSlots:
@@ -2388,9 +2394,12 @@ MonoBehaviour:
   m_Tooltip: 
   m_Nodes:
   - m_Id: 0
-    linkedSlots: []
-    position: {x: 1244, y: -584}
-    expandedSlots: []
+    linkedSlots:
+    - outputSlot: {fileID: 8926484042661617941}
+      inputSlot: {fileID: 8926484042661617926}
+    position: {x: 1234, y: -633}
+    expandedSlots:
+    - {fileID: 8926484042661617941}
     expanded: 1
     supecollapsed: 0
 --- !u!114 &8926484042661617941
@@ -2429,7 +2438,8 @@ MonoBehaviour:
       m_SerializableType: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
   m_Direction: 1
-  m_LinkedSlots: []
+  m_LinkedSlots:
+  - {fileID: 8926484042661617926}
 --- !u!114 &8926484042661617942
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4432,7 +4442,7 @@ MonoBehaviour:
     linkedSlots:
     - outputSlot: {fileID: 8926484042661618107}
       inputSlot: {fileID: 8926484042661617114}
-    position: {x: 1339, y: 939}
+    position: {x: 1346, y: 1291}
     expandedSlots: []
     expanded: 1
     supecollapsed: 0
@@ -4515,7 +4525,7 @@ MonoBehaviour:
     linkedSlots:
     - outputSlot: {fileID: 8926484042661618110}
       inputSlot: {fileID: 8926484042661618049}
-    position: {x: 1340, y: 863}
+    position: {x: 1300, y: 1193}
     expandedSlots: []
     expanded: 1
     supecollapsed: 0

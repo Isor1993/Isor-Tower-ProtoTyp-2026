@@ -15,6 +15,7 @@
 ******************************************************************************/
 
 using UnityEngine;
+using UnityEngine.VFX;
 
 /// <summary>
 /// State in which the sheep flees from a configured threat transform and updates
@@ -23,8 +24,9 @@ using UnityEngine;
 public class FleeState : SheepStateBase
 {
     private readonly Timer _updateTimer = new Timer();
-
+     
     private Transform _threat;
+    
 
     public FleeState(Sheep sheep, SheepFSM fsm) : base(sheep, fsm)
     {
@@ -51,7 +53,7 @@ public class FleeState : SheepStateBase
 #endif
         Sheep.Animator.SetBool("Run", true);
         _updateTimer.Reset();
-
+        Sheep.SetDustEmission(true);
         Sheep.Move.SetFleeMovement();
 
         if (_threat == null)
@@ -99,6 +101,7 @@ public class FleeState : SheepStateBase
     /// </summary>
     public override void Exit()
     {
+        Sheep.SetDustEmission(false);
         Sheep.Move.SetWalkMovement();
         _threat = null;
         Sheep.Animator.SetBool("Run", false);

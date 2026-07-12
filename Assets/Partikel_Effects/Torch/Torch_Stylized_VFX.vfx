@@ -249,7 +249,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7d4c867f6b72b714dbb5fd1780afe208, type: 3}
-  m_Name: FireTorch_Stylized_VFX
+  m_Name: Torch_Stylized_VFX
   m_EditorClassIdentifier: 
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 0}
@@ -356,38 +356,6 @@ MonoBehaviour:
       m_SerializableObject: 0.12
     min: 0.01
     max: 0.4
-    enumValues: []
-    descendantCount: 0
-  - name: Flame Lifetime Min
-    path: Flame Lifetime Min
-    tooltip: 
-    space: -1
-    spaceable: 0
-    sheetType: m_Float
-    realType: Single
-    defaultValue:
-      m_Type:
-        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-          PublicKeyToken=b77a5c561934e089
-      m_SerializableObject: 0.5
-    min: -Infinity
-    max: Infinity
-    enumValues: []
-    descendantCount: 0
-  - name: Flame Lifetime Max
-    path: Flame Lifetime Max
-    tooltip: 
-    space: -1
-    spaceable: 0
-    sheetType: m_Float
-    realType: Single
-    defaultValue:
-      m_Type:
-        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-          PublicKeyToken=b77a5c561934e089
-      m_SerializableObject: 0.9
-    min: -Infinity
-    max: Infinity
     enumValues: []
     descendantCount: 0
   - name: Flame Velocity Min
@@ -518,6 +486,38 @@ MonoBehaviour:
     max: 1
     enumValues: []
     descendantCount: 0
+  - name: Flame Lifetime Max
+    path: Flame Lifetime Max
+    tooltip: 
+    space: -1
+    spaceable: 0
+    sheetType: m_Float
+    realType: Single
+    defaultValue:
+      m_Type:
+        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089
+      m_SerializableObject: 0.9
+    min: -Infinity
+    max: Infinity
+    enumValues: []
+    descendantCount: 0
+  - name: Flame Lifetime Min
+    path: Flame Lifetime Min
+    tooltip: 
+    space: -1
+    spaceable: 0
+    sheetType: m_Float
+    realType: Single
+    defaultValue:
+      m_Type:
+        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089
+      m_SerializableObject: 0.5
+    min: -Infinity
+    max: Infinity
+    enumValues: []
+    descendantCount: 0
   - name: Smoek Settigs
     path: 
     tooltip: 
@@ -533,34 +533,18 @@ MonoBehaviour:
     max: Infinity
     enumValues: []
     descendantCount: 0
-  - name: Smoke 2D Texture
-    path: Smoke 2D Texture
+  - name: Smoke Lifetime Max
+    path: Smoke Lifetime Max
     tooltip: 
     space: -1
     spaceable: 0
-    sheetType: m_NamedObject
-    realType: Texture2D
+    sheetType: m_Float
+    realType: Single
     defaultValue:
       m_Type:
-        m_SerializableType: UnityEngine.Texture2D, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: '{"obj":{"fileID":10307,"guid":"0000000000000000f000000000000000","type":0}}'
-    min: -Infinity
-    max: Infinity
-    enumValues: []
-    descendantCount: 0
-  - name: Smoke Spawn Rate
-    path: Smoke Spawn Rate
-    tooltip: 
-    space: -1
-    spaceable: 0
-    sheetType: m_Int
-    realType: Int32
-    defaultValue:
-      m_Type:
-        m_SerializableType: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
+        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
           PublicKeyToken=b77a5c561934e089
-      m_SerializableObject: 15
+      m_SerializableObject: 4
     min: -Infinity
     max: Infinity
     enumValues: []
@@ -581,18 +565,18 @@ MonoBehaviour:
     max: Infinity
     enumValues: []
     descendantCount: 0
-  - name: Smoke Lifetime Max
-    path: Smoke Lifetime Max
+  - name: Smoke 2D Texture
+    path: Smoke 2D Texture
     tooltip: 
     space: -1
     spaceable: 0
-    sheetType: m_Float
-    realType: Single
+    sheetType: m_NamedObject
+    realType: Texture2D
     defaultValue:
       m_Type:
-        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-          PublicKeyToken=b77a5c561934e089
-      m_SerializableObject: 4
+        m_SerializableType: UnityEngine.Texture2D, UnityEngine.CoreModule, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+      m_SerializableObject: '{"obj":{"fileID":10307,"guid":"0000000000000000f000000000000000","type":0}}'
     min: -Infinity
     max: Infinity
     enumValues: []
@@ -689,6 +673,22 @@ MonoBehaviour:
         m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
           PublicKeyToken=b77a5c561934e089
       m_SerializableObject: 1
+    min: -Infinity
+    max: Infinity
+    enumValues: []
+    descendantCount: 0
+  - name: Smoke Spawn Rate
+    path: Smoke Spawn Rate
+    tooltip: 
+    space: -1
+    spaceable: 0
+    sheetType: m_Int
+    realType: Int32
+    defaultValue:
+      m_Type:
+        m_SerializableType: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089
+      m_SerializableObject: 15
     min: -Infinity
     max: Infinity
     enumValues: []
@@ -1078,7 +1078,7 @@ VisualEffectResource:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: FireTorch_Stylized_VFX
+  m_Name: Torch_Stylized_VFX
   m_Graph: {fileID: 114350483966674976}
   m_Infos:
     m_RendererSettings:
@@ -3564,7 +3564,7 @@ MonoBehaviour:
   - {fileID: 8926484042661614623}
   m_ExposedName: Flame Velocity Min
   m_Exposed: 1
-  m_Order: 5
+  m_Order: 3
   m_Category: FlameSetting
   m_Min:
     m_Type:
@@ -3747,7 +3747,7 @@ MonoBehaviour:
   - {fileID: 8926484042661614628}
   m_ExposedName: Flame Velocity Max
   m_Exposed: 1
-  m_Order: 6
+  m_Order: 4
   m_Category: FlameSetting
   m_Min:
     m_Type:
@@ -3965,7 +3965,7 @@ MonoBehaviour:
   - {fileID: 8926484042661614635}
   m_ExposedName: Flame Intensity
   m_Exposed: 1
-  m_Order: 7
+  m_Order: 5
   m_Category: FlameSetting
   m_Min:
     m_Type:
@@ -4046,7 +4046,7 @@ MonoBehaviour:
   - {fileID: 8926484042661614637}
   m_ExposedName: Flame Octaves
   m_Exposed: 1
-  m_Order: 8
+  m_Order: 6
   m_Category: FlameSetting
   m_Min:
     m_Type:
@@ -4129,7 +4129,7 @@ MonoBehaviour:
   - {fileID: 8926484042661614639}
   m_ExposedName: Flame Frequence
   m_Exposed: 1
-  m_Order: 9
+  m_Order: 7
   m_Category: FlameSetting
   m_Min:
     m_Type:
@@ -4210,7 +4210,7 @@ MonoBehaviour:
   - {fileID: 8926484042661614641}
   m_ExposedName: Flame Drag
   m_Exposed: 1
-  m_Order: 10
+  m_Order: 8
   m_Category: FlameSetting
   m_Min:
     m_Type:
@@ -4291,7 +4291,7 @@ MonoBehaviour:
   - {fileID: 8926484042661614643}
   m_ExposedName: Flame Roughness
   m_Exposed: 1
-  m_Order: 11
+  m_Order: 9
   m_Category: FlameSetting
   m_Min:
     m_Type:
@@ -4467,7 +4467,7 @@ MonoBehaviour:
   - {fileID: 8926484042661614649}
   m_ExposedName: Flame Linear Drag
   m_Exposed: 1
-  m_Order: 12
+  m_Order: 10
   m_Category: FlameSetting
   m_Min:
     m_Type:
@@ -6038,7 +6038,7 @@ MonoBehaviour:
   - {fileID: 8926484042661615360}
   m_ExposedName: Flame Lifetime Max
   m_Exposed: 1
-  m_Order: 4
+  m_Order: 11
   m_Category: FlameSetting
   m_Min:
     m_Type:
@@ -6119,7 +6119,7 @@ MonoBehaviour:
   - {fileID: 8926484042661615362}
   m_ExposedName: Flame Lifetime Min
   m_Exposed: 1
-  m_Order: 3
+  m_Order: 12
   m_Category: FlameSetting
   m_Min:
     m_Type:
@@ -6200,7 +6200,7 @@ MonoBehaviour:
   - {fileID: 8926484042661615367}
   m_ExposedName: Smoke Lifetime Max
   m_Exposed: 1
-  m_Order: 3
+  m_Order: 13
   m_Category: Smoek Settigs
   m_Min:
     m_Type:
@@ -6281,7 +6281,7 @@ MonoBehaviour:
   - {fileID: 8926484042661615369}
   m_ExposedName: Smoke Lifetime Min
   m_Exposed: 1
-  m_Order: 2
+  m_Order: 14
   m_Category: Smoek Settigs
   m_Min:
     m_Type:
@@ -6362,7 +6362,7 @@ MonoBehaviour:
   - {fileID: 8926484042661615371}
   m_ExposedName: Smoke 2D Texture
   m_Exposed: 1
-  m_Order: 0
+  m_Order: 15
   m_Category: Smoek Settigs
   m_Min:
     m_Type:
@@ -6381,7 +6381,7 @@ MonoBehaviour:
     linkedSlots:
     - outputSlot: {fileID: 8926484042661615371}
       inputSlot: {fileID: 8926484042661615537}
-    position: {x: 2003, y: 950}
+    position: {x: 1851, y: 1657}
     expandedSlots: []
     expanded: 1
     supecollapsed: 0
@@ -6443,7 +6443,7 @@ MonoBehaviour:
   - {fileID: 8926484042661615373}
   m_ExposedName: Smoke Arc
   m_Exposed: 1
-  m_Order: 4
+  m_Order: 16
   m_Category: Smoek Settigs
   m_Min:
     m_Type:
@@ -6526,7 +6526,7 @@ MonoBehaviour:
   - {fileID: 8926484042661615375}
   m_ExposedName: Smoke Position Shape Radius
   m_Exposed: 1
-  m_Order: 5
+  m_Order: 17
   m_Category: Smoek Settigs
   m_Min:
     m_Type:
@@ -6607,7 +6607,7 @@ MonoBehaviour:
   - {fileID: 8926484042661615383}
   m_ExposedName: Smoke Position
   m_Exposed: 1
-  m_Order: 6
+  m_Order: 18
   m_Category: Smoek Settigs
   m_Min:
     m_Type:
@@ -6790,7 +6790,7 @@ MonoBehaviour:
   - {fileID: 8926484042661615388}
   m_ExposedName: Smoke Position Angel
   m_Exposed: 1
-  m_Order: 7
+  m_Order: 19
   m_Category: Smoek Settigs
   m_Min:
     m_Type:
@@ -8739,7 +8739,7 @@ MonoBehaviour:
   - {fileID: 8926484042661615493}
   m_ExposedName: Smoke Turbulence Drag
   m_Exposed: 1
-  m_Order: 8
+  m_Order: 20
   m_Category: Smoek Settigs
   m_Min:
     m_Type:
@@ -8758,7 +8758,7 @@ MonoBehaviour:
     linkedSlots:
     - outputSlot: {fileID: 8926484042661615493}
       inputSlot: {fileID: 8926484042661615465}
-    position: {x: 2004.4424, y: 761.09644}
+    position: {x: 1685, y: 829}
     expandedSlots: []
     expanded: 1
     supecollapsed: 0
@@ -8820,7 +8820,7 @@ MonoBehaviour:
   - {fileID: 8926484042661615495}
   m_ExposedName: Smoke Turbulence Frequency
   m_Exposed: 1
-  m_Order: 9
+  m_Order: 21
   m_Category: Smoek Settigs
   m_Min:
     m_Type:
@@ -8839,7 +8839,7 @@ MonoBehaviour:
     linkedSlots:
     - outputSlot: {fileID: 8926484042661615495}
       inputSlot: {fileID: 8926484042661615467}
-    position: {x: 1969, y: 836}
+    position: {x: 1650, y: 904}
     expandedSlots: []
     expanded: 1
     supecollapsed: 0
@@ -9189,7 +9189,7 @@ MonoBehaviour:
   - {fileID: 8926484042661615508}
   m_ExposedName: Smoke Spawn Rate
   m_Exposed: 1
-  m_Order: 1
+  m_Order: 22
   m_Category: Smoek Settigs
   m_Min:
     m_Type:
@@ -9262,7 +9262,7 @@ MonoBehaviour:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 114350483966674976}
   m_Children: []
-  m_UIPosition: {x: 1807, y: 623}
+  m_UIPosition: {x: 1577, y: 644}
   m_UICollapsed: 0
   m_UISuperCollapsed: 0
   m_InputSlots:
