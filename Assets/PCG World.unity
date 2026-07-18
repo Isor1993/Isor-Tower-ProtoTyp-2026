@@ -150,7 +150,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e0e3d35200a66644b0925a74e1d7207, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TerrainPreview
-  _heightmapResolution: {x: 5, y: 5}
+  _heightmapResolution: 100
+  _testMode: 2
+  _noiseScale: 20
+  _octaves: 10
+  _persistence: 0.5
+  _lacunarity: 2
+  _seed: 0
 --- !u!23 &49812311
 MeshRenderer:
   m_ObjectHideFlags: 0
