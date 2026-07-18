@@ -14,6 +14,7 @@
 * History :
 * 18.07.2026 ER Created
 * 18.07.2026 ER Added test mode enum and HeightmapGenerator hookup
+* 18.07.2026 ER Replaced parameter fields with a TerrainConfig reference
 ******************************************************************************/
 
 using UnityEngine;
@@ -34,52 +35,29 @@ public enum TestMode
 /// </summary>
 public class TerrainPreview : MonoBehaviour
 {
-    [Header("Heightmap")]
-    [Tooltip("Vertices per edge of the test heightmap (grid is always square).")]
-    [Min(2)]
-    [SerializeField] private int _heightmapResolution = 65;
-
+    [Header("Config")]
     [Tooltip("Which test pattern fills the heightmap. Flat and Ramp are regression checks for MeshBuilder; Noise runs the real HeightmapGenerator.")]
     [SerializeField] private TestMode _testMode;
-
-    [Header("Noise (used by mode Noise only)")]
-    [Tooltip("Zoom into the noise field; larger values = wider, calmer hills. Must not be 0.")]
-    [Min(0.01f)]
-    [SerializeField] private float _noiseScale = 20f;
-
-    [Tooltip("Number of noise layers stacked per point; more = finer detail, same height.")]
-    [Range(1,6)]
-    [SerializeField] private int _octaves = 4;
-
-    [Tooltip("Amplitude falloff per octave (0-1); lower = smoother terrain.")]
-    [Range(0f, 1f)]
-    [SerializeField] private float _persistence = 0.5f;
-
-    [Tooltip("Frequency growth per octave; 2 = each layer twice as fine.")]
-    [Min(1f)]
-    [SerializeField] private float _lacunarity = 2f;
-
-    [Tooltip("Selects the terrain; the same seed always produces the same terrain.")]
-    [SerializeField] private int _seed;
-
-    [Header("Mesh (all modes)")]
-    [Tooltip("Edge length of the terrain in world units.")]
-    [Min(0.1f)]
-    [SerializeField] private float _sizeInMeters = 200f;
-
-    [Tooltip("Scales the 0-1 height values to meters.")]
-    [Min(0.1f)]
-    [SerializeField] private float _heightMultiplier = 50f;
+    [Tooltip("Terrain settings asset driving all modes; swap assets to switch presets.")]
+    [SerializeField] private TerrainConfig _config;
 
     private float[,] _heightmap;
 
     private void Awake()
     {
-        _heightmap = new float[_heightmapResolution, _heightmapResolution];
+        if (_config == null)
+        {
+            Debug.LogError("TerrainPreview: no TerrainConfig assigned.", this);
+            return;
+        }
+
+        _heightmap = new float[_config.HeightmapResolution, _config.HeightmapResolution];
     }
 
     private void Start()
     {
+        if (_config == null) return;
+
         switch (_testMode)
         {
             case TestMode.Flat:
@@ -93,7 +71,7 @@ public class TerrainPreview : MonoBehaviour
                 break;
         }
 
-        GetComponent<MeshFilter>().mesh = MeshBuilder.Build(_heightmap, _sizeInMeters, _heightMultiplier);
+        GetComponent<MeshFilter>().mesh = MeshBuilder.Build(_heightmap, _config.SizeInMeters, _config.HeightMultiplier);
     }
 
     /// <summary>
@@ -131,6 +109,6 @@ public class TerrainPreview : MonoBehaviour
     /// </summary>
     private void NoiseTest()
     {
-        _heightmap = HeightmapGenerator.Generate(_heightmapResolution, _noiseScale, _octaves, _persistence, _lacunarity, _seed);
+        _heightmap = HeightmapGenerator.Generate(_config);
     }
 }
