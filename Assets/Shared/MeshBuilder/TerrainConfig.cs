@@ -12,6 +12,7 @@
 *
 * History :
 * 18.07.2026 ER Created
+* 18.07.2026 ER Added terrain material (null = render pipeline default)
 ******************************************************************************/
 
 using UnityEngine;
@@ -55,6 +56,8 @@ public class TerrainConfig : ScriptableObject
     [Tooltip("Scales the 0-1 height values to meters.")]
     [Min(0.1f)]
     [SerializeField] private float _heightMultiplier = 50f;
+    [Tooltip("Material applied to the generated terrain; leave empty to use the render pipeline's default material.")]
+    [SerializeField] private Material _terrainMaterial;
 
     /// <summary>Vertices per edge of the square heightmap.</summary>
     public int HeightmapResolution => _heightmapResolution;
@@ -82,4 +85,7 @@ public class TerrainConfig : ScriptableObject
 
     /// <summary>Scales the 0-1 height values to meters.</summary>
     public float HeightMultiplier => _heightMultiplier;
+
+    /// <summary>Material for the generated terrain; null = pipeline default.</summary>
+    public Material TerrainMaterial => _terrainMaterial;
 }
