@@ -14,6 +14,7 @@
 * 18.07.2026 ER Created
 * 18.07.2026 ER Terrain material now comes from the config (pipeline default as fallback)
 * 19.07.2026 ER Plateau modifier hooked in between generator and mesh build
+* 19.07.2026 ER Chunk loop: full rebuild, one child object per chunk
 ******************************************************************************/
 
 using UnityEngine;
@@ -38,7 +39,8 @@ public class TerrainToolPresenter
         return config != null;
     }
 
-    /// <summary>Runs the pipeline and assigns the mesh to the terrain object.</summary>
+    /// <summary>Rebuilds the terrain: runs the pipeline once per chunk
+    /// and parents the chunk objects under one terrain root.</summary>
     public void Generate(TerrainConfig config)
     {
         if (!CanGenerate(config))
@@ -46,24 +48,41 @@ public class TerrainToolPresenter
             StatusMessage = "Assign a TerrainConfig asset before generating.";
             return;
         }
+        float chunkSizeInMeters = config.ChunkSizeInMeters;
 
-        float[,] heightmap = HeightmapGenerator.Generate(config);
-        PlateauModifier.Apply(heightmap, config);
-        Mesh mesh = MeshBuilder.Build(heightmap, config.SizeInMeters, config.HeightMultiplier);
+        // Full rebuild instead of reuse: a changed chunk count would
+        // otherwise leave stale chunk children behind.
+        GameObject terrain = GameObject.Find(TerrainObjectName);
+        if (terrain != null)
+        {
+            Object.DestroyImmediate(terrain);
+        }
+        terrain = new GameObject(TerrainObjectName);
 
-        GameObject terrain = FindOrCreateTerrainObject();
-        // sharedMesh, not mesh - .mesh would clone the mesh in edit mode.
-        terrain.GetComponent<MeshFilter>().sharedMesh = mesh;
-
-        // Applied on every generate (not only on create) so a material change
-        // in the config shows up without clearing first. Built-in materials
+        // Resolved once - all chunks share one material. Built-in defaults
         // render magenta under URP, so the fallback asks the active render
         // pipeline for its default material instead.
         Material material = config.TerrainMaterial != null
             ? config.TerrainMaterial
             : GraphicsSettings.currentRenderPipeline.defaultMaterial;
-        terrain.GetComponent<MeshRenderer>().sharedMaterial = material;
+        for (int chunkZ = 0; chunkZ < config.ChunksPerEdge; chunkZ++)
+        {
+            for (int chunkX = 0; chunkX < config.ChunksPerEdge; chunkX++)
+            {
+                float[,] heightmap = HeightmapGenerator.Generate(config, chunkX, chunkZ);
 
+                PlateauModifier.Apply(heightmap, config, chunkX, chunkZ);
+
+                Mesh mesh = MeshBuilder.Build(heightmap, chunkSizeInMeters, config.HeightMultiplier);
+                GameObject chunk = new GameObject($"Chunk_{chunkX}_{chunkZ}");
+                chunk.transform.SetParent(terrain.transform);
+                chunk.transform.localPosition = new Vector3(chunkX * chunkSizeInMeters, 0, chunkZ * chunkSizeInMeters);
+                // shared* variants - the non-shared ones clone in edit mode.
+                chunk.AddComponent<MeshFilter>().sharedMesh = mesh;
+                chunk.AddComponent<MeshRenderer>().sharedMaterial = material;
+
+            }
+        }
         StatusMessage = $"Terrain generated with seed {config.Seed}.";
     }
 
@@ -81,16 +100,5 @@ public class TerrainToolPresenter
         StatusMessage = "Generated terrain removed.";
     }
 
-    /// <summary>Reuses the existing terrain object or creates a fresh one.</summary>
-    private GameObject FindOrCreateTerrainObject()
-    {
-        GameObject terrain = GameObject.Find(TerrainObjectName);
-        if (terrain == null)
-        {
-            terrain = new GameObject(TerrainObjectName);
-            terrain.AddComponent<MeshFilter>();
-            terrain.AddComponent<MeshRenderer>();
-        }
-        return terrain;
-    }
+
 }

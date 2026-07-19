@@ -12,6 +12,7 @@
 *
 * History :
 * 19.07.2026 ER Created
+* 19.07.2026 ER Works per chunk: normalization now spans the whole terrain
 ******************************************************************************/
 
 using UnityEngine;
@@ -27,9 +28,11 @@ public static class PlateauModifier
     /// height inside the radius, blended in the ring around it,
     /// untouched beyond that.
     /// </summary>
-    /// <param name="heightmap">Square 0-1 heightmap, indexed [x, z]; modified in place.</param>
+    /// <param name="heightmap">Square 0-1 chunk heightmap, indexed [x, z]; modified in place.</param>
     /// <param name="config">Terrain settings asset; callers guard against null.</param>
-    public static void Apply(float[,] heightmap, TerrainConfig config)
+    /// <param name="chunkX">Chunk column, 0 to chunksPerEdge - 1.</param>
+    /// <param name="chunkZ">Chunk row, 0 to chunksPerEdge - 1.</param>
+    public static void Apply(float[,] heightmap, TerrainConfig config, int chunkX, int chunkZ)
     {
         float plateauRadius = config.PlateauRadius;
         float plateauBlend = config.PlateauBlend;
@@ -45,10 +48,15 @@ public static class PlateauModifier
         {
             for (int x = 0; x < resolution; x++)
             {
-                // Normalize to 0-1 so distances compare against the
-                // normalized center/radius regardless of resolution.
-                float normalZ = z / (float)(resolution - 1);
-                float normalX = x / (float)(resolution - 1);
+                int globalX = chunkX * (config.ChunkResolution - 1) + x;
+                int globalZ = chunkZ * (config.ChunkResolution - 1) + z;
+                float worldX = globalX * config.MetersPerQuad;
+                float worldZ = globalZ * config.MetersPerQuad;
+                // World position over world size: 0-1 across the WHOLE
+                // terrain, so center and radius mean the same thing in
+                // every chunk.
+                float normalZ = worldZ / config.SizeInMeters;
+                float normalX = worldX / config.SizeInMeters;
 
                 float distanceToCenter = Vector2.Distance(
                     new Vector2(normalX, normalZ),

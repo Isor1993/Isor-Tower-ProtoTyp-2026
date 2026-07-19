@@ -6,7 +6,7 @@
 *
 * Description :
 * ScriptableObject parameter object for the terrain pipeline: bundles the
-* heightmap, noise and mesh settings that every pipeline stage reads.
+* chunk layout, noise and mesh settings that every pipeline stage reads.
 * Assets are created via Create > Terrain > Terrain Config and swapped in
 * the Inspector as terrain presets. Read-only from code by design.
 *
@@ -14,6 +14,7 @@
 * 18.07.2026 ER Created
 * 18.07.2026 ER Added terrain material (null = render pipeline default)
 * 19.07.2026 ER Added plateau settings (center, radius, blend, height)
+* 19.07.2026 ER Replaced heightmap resolution with chunk layout (chunks per edge, chunk resolution)
 ******************************************************************************/
 
 using UnityEngine;
@@ -27,10 +28,14 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "TerrainConfig", menuName = "Terrain/Terrain Config")]
 public class TerrainConfig : ScriptableObject
 {
-    [Header("Heightmap")]
-    [Tooltip("Vertices per edge of the square heightmap.")]
-    [Min(2)]
-    [SerializeField] private int _heightmapResolution = 65;
+    [Header("Chunks")]
+    [Tooltip("Chunks per edge of the square terrain; total chunk count is this value squared.")]
+    [Min(1)]
+    [SerializeField] private int _chunksPerEdge = 8;
+    [Tooltip("Vertices per edge of a single chunk; adjacent chunks share their border row.")]
+    [Range(2, 255)]
+    [SerializeField] private int _chunkResolution = 129;
+
 
     [Header("Noise")]
     [Tooltip("Remaps the normalized 0-1 heights; bend the curve down to flatten valleys and emphasize peaks. Linear = no change.")]
@@ -70,15 +75,15 @@ public class TerrainConfig : ScriptableObject
     [Header("Mesh")]
     [Tooltip("Edge length of the terrain in world units.")]
     [Min(0.1f)]
-    [SerializeField] private float _sizeInMeters = 200f;
+    [SerializeField] private float _sizeInMeters = 2048f;
     [Tooltip("Scales the 0-1 height values to meters.")]
     [Min(0.1f)]
     [SerializeField] private float _heightMultiplier = 50f;
     [Tooltip("Material applied to the generated terrain; leave empty to use the render pipeline's default material.")]
     [SerializeField] private Material _terrainMaterial;
 
-    /// <summary>Vertices per edge of the square heightmap.</summary>
-    public int HeightmapResolution => _heightmapResolution;
+
+
 
     /// <summary>Remaps the normalized 0-1 heights after octave blending.</summary>
     public AnimationCurve HeightCurve => _heightCurve;
@@ -121,4 +126,16 @@ public class TerrainConfig : ScriptableObject
 
     /// <summary>Radius of the flat area; 0 = plateau disabled.</summary>
     public float PlateauRadius => _plateauRadius;
+
+    /// <summary>Chunks per edge of the square terrain.</summary>
+    public int ChunksPerEdge => _chunksPerEdge;
+
+    /// <summary>Vertices per edge of a single chunk.</summary>
+    public int ChunkResolution => _chunkResolution;
+
+    /// <summary>World size of one quad in meters, derived from size and chunk layout.</summary>
+    public float MetersPerQuad => _sizeInMeters / (_chunksPerEdge * (_chunkResolution - 1));
+
+    /// <summary>Edge length of one chunk in world units.</summary>
+    public float ChunkSizeInMeters => _sizeInMeters / _chunksPerEdge;
 }
