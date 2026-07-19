@@ -12,35 +12,50 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d352332b45a4fa44fa64efc4e21d4353, type: 3}
   m_Name: TerrainConfig_Default
   m_EditorClassIdentifier: Assembly-CSharp::TerrainConfig
-  _heightmapResolution: 65
+  _heightmapResolution: 155
   _heightCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 0
-      outSlope: 1
-      tangentMode: 0
+      inSlope: -0.54991746
+      outSlope: -0.54991746
+      tangentMode: 34
       weightedMode: 0
       inWeight: 0
-      outWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.17635347
+      value: -0.09697986
+      inSlope: 0.39097005
+      outSlope: 0.39097005
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: 1
-      outSlope: 0
-      tangentMode: 0
+      inSlope: 1.3318576
+      outSlope: 1.3318576
+      tangentMode: 34
       weightedMode: 0
-      inWeight: 0
+      inWeight: 0.33333334
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  _noiseScale: 20
+  _noiseScale: 12
   _octaves: 4
-  _persistence: 0.5
+  _persistence: 0.252
   _lacunarity: 2
-  _seed: 0
-  _sizeInMeters: 200
-  _heightMultiplier: 50
+  _seed: 222
+  _plateauCenterX: 0.485
+  _plateauCenterZ: 0.472
+  _plateauRadius: 0.06
+  _plateauBlend: 0.21
+  _plateauHeight: 0
+  _sizeInMeters: 2000
+  _heightMultiplier: 150
+  _terrainMaterial: {fileID: 2100000, guid: 79a0d4a57d177d14dbe4433499f2f5d7, type: 2}

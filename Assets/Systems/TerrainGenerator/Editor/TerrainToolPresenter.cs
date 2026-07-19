@@ -13,6 +13,7 @@
 * History :
 * 18.07.2026 ER Created
 * 18.07.2026 ER Terrain material now comes from the config (pipeline default as fallback)
+* 19.07.2026 ER Plateau modifier hooked in between generator and mesh build
 ******************************************************************************/
 
 using UnityEngine;
@@ -47,6 +48,7 @@ public class TerrainToolPresenter
         }
 
         float[,] heightmap = HeightmapGenerator.Generate(config);
+        PlateauModifier.Apply(heightmap, config);
         Mesh mesh = MeshBuilder.Build(heightmap, config.SizeInMeters, config.HeightMultiplier);
 
         GameObject terrain = FindOrCreateTerrainObject();

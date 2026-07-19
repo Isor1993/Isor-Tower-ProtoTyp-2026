@@ -13,6 +13,7 @@
 * History :
 * 18.07.2026 ER Created
 * 18.07.2026 ER Added terrain material (null = render pipeline default)
+* 19.07.2026 ER Added plateau settings (center, radius, blend, height)
 ******************************************************************************/
 
 using UnityEngine;
@@ -48,6 +49,23 @@ public class TerrainConfig : ScriptableObject
     [SerializeField] private float _lacunarity = 2f;
     [Tooltip("Selects the terrain; the same seed always produces the same terrain.")]
     [SerializeField] private int _seed;
+
+    [Header("Plateau")]
+    [Tooltip("Plateau center along X, normalized: 0 = left edge, 0.5 = middle, 1 = right edge.")]
+    [Range(0f, 1f)]
+    [SerializeField] private float _plateauCenterX = 0.5f;
+    [Tooltip("Plateau center along Z, normalized: 0 = near edge, 0.5 = middle, 1 = far edge.")]
+    [Range(0f, 1f)]
+    [SerializeField] private float _plateauCenterZ = 0.5f;
+    [Tooltip("Radius of the flat area as a fraction of the terrain size; 0 disables the plateau.")]
+    [Min(0f)]
+    [SerializeField] private float _plateauRadius = 0f;
+    [Tooltip("Width of the ring that blends the plateau into the surrounding terrain; must not be 0.")]
+    [Min(0.001f)]
+    [SerializeField] private float _plateauBlend = 0.05f;
+    [Tooltip("Target height of the flat area in the 0-1 heightmap space.")]
+    [Range(0f, 1f)]
+    [SerializeField] private float _plateauHeight = 0.5f;
 
     [Header("Mesh")]
     [Tooltip("Edge length of the terrain in world units.")]
@@ -88,4 +106,19 @@ public class TerrainConfig : ScriptableObject
 
     /// <summary>Material for the generated terrain; null = pipeline default.</summary>
     public Material TerrainMaterial => _terrainMaterial;
+
+    /// <summary>Plateau center along X, normalized 0-1.</summary>
+    public float PlateauCenterX => _plateauCenterX;
+
+    /// <summary>Plateau center along Z, normalized 0-1.</summary>
+    public float PlateauCenterZ => _plateauCenterZ;
+
+    /// <summary>Width of the blend ring around the plateau.</summary>
+    public float PlateauBlend => _plateauBlend;
+
+    /// <summary>Target height of the flat area, 0-1.</summary>
+    public float PlateauHeight => _plateauHeight;
+
+    /// <summary>Radius of the flat area; 0 = plateau disabled.</summary>
+    public float PlateauRadius => _plateauRadius;
 }
