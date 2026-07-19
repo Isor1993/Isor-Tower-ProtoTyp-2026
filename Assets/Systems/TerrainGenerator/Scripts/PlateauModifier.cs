@@ -13,6 +13,7 @@
 * History :
 * 19.07.2026 ER Created
 * 19.07.2026 ER Works per chunk: normalization now spans the whole terrain
+* 19.07.2026 ER Padding-aware index mapping; smoothstep blend for a kink-free ring
 ******************************************************************************/
 
 using UnityEngine;
@@ -28,7 +29,7 @@ public static class PlateauModifier
     /// height inside the radius, blended in the ring around it,
     /// untouched beyond that.
     /// </summary>
-    /// <param name="heightmap">Square 0-1 chunk heightmap, indexed [x, z]; modified in place.</param>
+    /// <param name="heightmap">Square 0-1 chunk heightmap padded by one ring, indexed [x, z]; modified in place.</param>
     /// <param name="config">Terrain settings asset; callers guard against null.</param>
     /// <param name="chunkX">Chunk column, 0 to chunksPerEdge - 1.</param>
     /// <param name="chunkZ">Chunk row, 0 to chunksPerEdge - 1.</param>
@@ -48,8 +49,8 @@ public static class PlateauModifier
         {
             for (int x = 0; x < resolution; x++)
             {
-                int globalX = chunkX * (config.ChunkResolution - 1) + x;
-                int globalZ = chunkZ * (config.ChunkResolution - 1) + z;
+                int globalX = chunkX * (config.ChunkResolution - 1) + (x - 1);
+                int globalZ = chunkZ * (config.ChunkResolution - 1) + (z - 1);
                 float worldX = globalX * config.MetersPerQuad;
                 float worldZ = globalZ * config.MetersPerQuad;
                 // World position over world size: 0-1 across the WHOLE
@@ -70,9 +71,12 @@ public static class PlateauModifier
 
                 // Blend ring: t runs 0 (plateau edge) to 1 (outer rim),
                 // fading from plateau height back to the original terrain.
+                // Smoothstep flattens t at both ends, so the ring meets
+                // plateau and terrain without a kink (C1-continuous).
                 if (distanceToCenter < plateauRadius + plateauBlend)
                 {
                     float t = (distanceToCenter - plateauRadius) / plateauBlend;
+                    t = Mathf.SmoothStep(0f, 1f, t);
                     heightmap[x, z] = Mathf.Lerp(config.PlateauHeight, heightmap[x, z], t);
                 }
             }

@@ -20,34 +20,52 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 0
-      outSlope: 1
+      inSlope: 0.5590062
+      outSlope: 0.5590062
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0
+      outWeight: 0.21904762
+    - serializedVersion: 3
+      time: 0.35
+      value: 0.15
+      inSlope: 0.14285716
+      outSlope: 0.14285716
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.23809518
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.6
+      value: 0.18
+      inSlope: 0.63673466
+      outSlope: 0.63673466
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.23333332
+      outWeight: 0.33333334
     - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: 1
-      outSlope: 0
+      inSlope: 1.1246204
+      outSlope: 1.1246204
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0
+      inWeight: 0.19583331
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  _noiseScale: 84.4
-  _octaves: 4
-  _persistence: 0.5
+  _noiseScale: 461.1
+  _octaves: 5
+  _persistence: 0.273
   _lacunarity: 2
-  _seed: 0
-  _plateauCenterX: 0.199
-  _plateauCenterZ: 0.183
+  _seed: 526
+  _plateauCenterX: 0.5
+  _plateauCenterZ: 0.5
   _plateauRadius: 0.035
-  _plateauBlend: 0.09
-  _plateauHeight: 0.263
+  _plateauBlend: 0.05
+  _plateauHeight: 0.15
   _sizeInMeters: 2048
-  _heightMultiplier: 100
+  _heightMultiplier: 700
   _terrainMaterial: {fileID: 2100000, guid: 79a0d4a57d177d14dbe4433499f2f5d7, type: 2}

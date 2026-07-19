@@ -8,14 +8,18 @@
 * Static utility that generates one chunk of the terrain heightmap
 * (square float[,] with values 0-1, index convention [x, z]) from
 * layered Perlin noise, driven by a TerrainConfig asset. Samples by
-* world position, so adjacent chunks line up seamlessly. Pure
-* data-in/data-out: no scene objects, no Unity state. Stage 2 of the
+* world position, so adjacent chunks line up seamlessly. The result is
+* padded by one ring so MeshBuilder can compute seamless border normals.
+* Pure data-in/data-out: no scene objects, no Unity state. Stage 2 of the
 * terrain pipeline - MeshBuilder turns the result into a mesh.
 *
 * History :
 * 18.07.2026 ER Created
 * 18.07.2026 ER Switched to TerrainConfig parameter object, added height curve
 * 19.07.2026 ER Chunk-based generation: world-position sampling for seamless borders
+* 19.07.2026 ER Clamp the curve result to 0-1 (curve overshoot could dip below the world)
+* 19.07.2026 ER Smaller octave offsets so float precision does not terrace fine resolutions
+* 19.07.2026 ER One-vertex padding ring feeding MeshBuilder's border normals
 ******************************************************************************/
 
 using UnityEngine;
@@ -26,6 +30,11 @@ using UnityEngine;
 /// </summary>
 public static class HeightmapGenerator
 {
+    // Octave offsets stay within this range so Perlin is sampled where float
+    // precision (about 0.001 here) is finer than the vertex spacing. Large
+    // offsets (e.g. 100000) coarsen precision and terrace fine meshes.
+    private const int MaxOctaveOffset = 10000;
+
     /// <summary>
     /// Generates the heightmap chunk at the given chunk coordinates from
     /// layered Perlin noise and reshapes it through the config's height
@@ -34,10 +43,11 @@ public static class HeightmapGenerator
     /// <param name="config">Terrain settings asset; callers guard against null.</param>
     /// <param name="chunkX">Chunk column, 0 to chunksPerEdge - 1.</param>
     /// <param name="chunkZ">Chunk row, 0 to chunksPerEdge - 1.</param>
-    /// <returns>Square float[,] with values 0-1, indexed [x, z].</returns>
+    /// <returns>Square float[,] with values 0-1, indexed [x, z], padded by one ring for the mesh's border normals.</returns>
     public static float[,] Generate(TerrainConfig config, int chunkX, int chunkZ)
     {
-        float[,] heightmap = new float[config.ChunkResolution, config.ChunkResolution];
+        int paddedResolution = config.ChunkResolution + 2;
+        float[,] heightmap = new float[paddedResolution, paddedResolution];
 
         // The noise field is infinite and always the same - the seed only
         // decides where we look. Each octave gets its own offset so fine
@@ -47,18 +57,20 @@ public static class HeightmapGenerator
 
         for (int i = 0; i < octaveOffsets.Length; i++)
         {
-            octaveOffsets[i] = new Vector2(random.Next(-100000, 100000), random.Next(-100000, 100000));
+            octaveOffsets[i] = new Vector2(random.Next(-MaxOctaveOffset, MaxOctaveOffset), random.Next(-MaxOctaveOffset, MaxOctaveOffset));
         }
-        for (int z = 0; z < config.ChunkResolution; z++)
+        for (int z = 0; z < paddedResolution; z++)
         {
-            for (int x = 0; x < config.ChunkResolution; x++)
+            for (int x = 0; x < paddedResolution; x++)
             {
-                // Local index -> global vertex index -> world position.
-                // ChunkResolution - 1 because neighbors share their border
-                // row: the same world position samples the same height,
-                // which is what keeps the chunk borders seamless.
-                int globalX = chunkX * (config.ChunkResolution - 1) + x;
-                int globalZ = chunkZ * (config.ChunkResolution - 1) + z;
+                // Padded index -> global vertex index -> world position.
+                // The (x - 1) shifts the ring out: padded index 1 is the
+                // chunk's first real vertex, index 0 the ring cell before it.
+                // The multiplier stays ChunkResolution - 1 (not padded)
+                // because neighbours share their border row: the same world
+                // position samples the same height, keeping borders seamless.
+                int globalX = chunkX * (config.ChunkResolution - 1) + (x - 1);
+                int globalZ = chunkZ * (config.ChunkResolution - 1) + (z - 1);
                 float worldX = globalX * config.MetersPerQuad;
                 float worldZ = globalZ * config.MetersPerQuad;
                 // Every pixel restarts at the loudest, coarsest layer -
@@ -85,7 +97,7 @@ public static class HeightmapGenerator
                 heightmap[x, z] = noiseHeight / totalAmplitude;
                 // The curve reshapes the 0-1 profile (e.g. flatten
                 // valleys); meter scaling happens later in MeshBuilder.
-                heightmap[x, z] = config.HeightCurve.Evaluate(heightmap[x, z]);
+                heightmap[x, z] = Mathf.Clamp01(config.HeightCurve.Evaluate(heightmap[x, z]));
             }
         }
         return heightmap;
