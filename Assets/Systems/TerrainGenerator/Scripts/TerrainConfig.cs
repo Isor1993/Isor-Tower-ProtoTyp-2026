@@ -15,6 +15,7 @@
 * 18.07.2026 ER Added terrain material (null = render pipeline default)
 * 19.07.2026 ER Added plateau settings (center, radius, blend, height)
 * 19.07.2026 ER Replaced heightmap resolution with chunk layout (chunks per edge, chunk resolution)
+* 20.07.2026 ER Added water settings (enabled, level, shore margin, material) and flood-warning validation
 ******************************************************************************/
 
 using UnityEngine;
@@ -82,6 +83,18 @@ public class TerrainConfig : ScriptableObject
     [Tooltip("Material applied to the generated terrain; leave empty to use the render pipeline's default material.")]
     [SerializeField] private Material _terrainMaterial;
 
+    [Header("Water")]
+    [Tooltip("Master switch for the water plane; the level below is kept while disabled so it can be toggled without losing the setting.")]
+    [SerializeField] private bool _isWaterEnabled = false;
+    [Tooltip("Water surface height in the normalized 0-1 heightmap space (compared after the height curve); scales with the map, so the shoreline stays put when the height multiplier changes.")]
+    [Range(0f, 1f)]
+    [SerializeField] private float _waterLevel = 0.3f;
+    [Tooltip("Bare strip above the waterline where nothing is placed, in 0-1 height units; used by the placement stage, not by the water plane itself.")]
+    [Range(0f, 1f)]
+    [SerializeField] private float _shoreMargin = 0.05f;
+    [Tooltip("Material for the water plane; leave empty to use the render pipeline's default material.")]
+    [SerializeField] private Material _waterMaterial;
+
 
 
 
@@ -138,4 +151,26 @@ public class TerrainConfig : ScriptableObject
 
     /// <summary>Edge length of one chunk in world units.</summary>
     public float ChunkSizeInMeters => _sizeInMeters / _chunksPerEdge;
+
+    /// <summary>Master switch for the water plane; keeps the level while disabled.</summary>
+    public bool IsWaterEnabled => _isWaterEnabled;
+
+    /// <summary>Water surface height, normalized 0-1 (compared after the height curve).</summary>
+    public float WaterLevel => _waterLevel;
+
+    /// <summary>Bare strip above the waterline (0-1) where the placement stage skips objects.</summary>
+    public float ShoreMargin => _shoreMargin;
+
+    /// <summary>Material for the water plane; null = pipeline default.</summary>
+    public Material WaterMaterial => _waterMaterial;
+
+    private void OnValidate()
+    {
+
+
+        if (_plateauRadius > 0 && _waterLevel >= _plateauHeight)
+        {
+            Debug.LogWarning("Plateau height is at or below the water level - the village would be flooded!", this);
+        }
+    }
 }

@@ -15,6 +15,7 @@
 * 18.07.2026 ER Terrain material now comes from the config (pipeline default as fallback)
 * 19.07.2026 ER Plateau modifier hooked in between generator and mesh build
 * 19.07.2026 ER Chunk loop: full rebuild, one child object per chunk
+* 20.07.2026 ER Optional water plane added under the terrain root when enabled
 ******************************************************************************/
 
 using UnityEngine;
@@ -28,6 +29,9 @@ using UnityEngine.Rendering;
 public class TerrainToolPresenter
 {
     private const string TerrainObjectName = "Generated Terrain";
+    private const string WaterObjectName = "Generated Water Plane";
+    // Unity's built-in Plane primitive spans 10x10 units at scale 1.
+    private const float PlanePrimitiveSizeInMeters = 10f;
 
     /// <summary>Message the view displays below the buttons.</summary>
     public string StatusMessage { get; private set; } = "";
@@ -84,6 +88,11 @@ public class TerrainToolPresenter
             }
         }
         StatusMessage = $"Terrain generated with seed {config.Seed}.";
+
+        if (config.IsWaterEnabled)
+        {
+            BuildWaterPlane(config, terrain);
+        }
     }
 
     /// <summary>Removes the generated terrain from the scene.</summary>
@@ -100,5 +109,30 @@ public class TerrainToolPresenter
         StatusMessage = "Generated terrain removed.";
     }
 
+
+    /// <summary>Spawns the water plane as a child of the terrain root: a
+    /// single primitive scaled to the map, centered, and raised to the water
+    /// level in meters. Parented so Clear removes it with the terrain.</summary>
+    /// <param name="config">Terrain settings; supplies water level, size and material.</param>
+    /// <param name="terrain">Terrain root the plane is parented under.</param>
+    private void BuildWaterPlane(TerrainConfig config, GameObject terrain)
+    {
+        GameObject water = GameObject.CreatePrimitive(PrimitiveType.Plane);
+        water.name = WaterObjectName;
+        water.transform.SetParent(terrain.transform);
+
+        float waterY = config.WaterLevel * config.HeightMultiplier;
+        float mapCenter = config.SizeInMeters / 2;
+        water.transform.localPosition = new Vector3(mapCenter, waterY, mapCenter);
+
+        float planeScale = config.SizeInMeters / PlanePrimitiveSizeInMeters;
+        water.transform.localScale = new Vector3(planeScale, 1f, planeScale);
+
+        Material waterMaterial = config.WaterMaterial != null
+            ? config.WaterMaterial
+            : GraphicsSettings.currentRenderPipeline.defaultMaterial;
+        water.GetComponent<MeshRenderer>().sharedMaterial = waterMaterial;
+        Object.DestroyImmediate(water.GetComponent<MeshCollider>());
+    }
 
 }
