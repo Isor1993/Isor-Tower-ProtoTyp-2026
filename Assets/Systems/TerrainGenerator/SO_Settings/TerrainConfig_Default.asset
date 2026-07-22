@@ -27,17 +27,26 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0.21904762
     - serializedVersion: 3
-      time: 0.35
-      value: 0.15
-      inSlope: 0.14285716
-      outSlope: 0.14285716
+      time: 0.17912814
+      value: 0.022638686
+      inSlope: 0.44611087
+      outSlope: 0.44611087
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.39666665
+      value: 0.1404762
+      inSlope: 0
+      outSlope: 0
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.23809518
-      outWeight: 0.33333334
+      outWeight: 0.4579439
     - serializedVersion: 3
-      time: 0.6
-      value: 0.18
+      time: 0.5966667
+      value: 0.25142857
       inSlope: 0.63673466
       outSlope: 0.63673466
       tangentMode: 0
@@ -60,7 +69,7 @@ MonoBehaviour:
   _octaves: 5
   _persistence: 0.273
   _lacunarity: 2
-  _seed: 526
+  _seed: 2376
   _plateauCenterX: 0.5
   _plateauCenterZ: 0.5
   _plateauRadius: 0.035
@@ -68,4 +77,8 @@ MonoBehaviour:
   _plateauHeight: 0.15
   _sizeInMeters: 2048
   _heightMultiplier: 700
-  _terrainMaterial: {fileID: 2100000, guid: 79a0d4a57d177d14dbe4433499f2f5d7, type: 2}
+  _terrainMaterial: {fileID: 2100000, guid: adb6afde08a9aff4ca286136b5c416ff, type: 2}
+  _isWaterEnabled: 1
+  _waterLevel: 0.14
+  _shoreMargin: 0.05
+  _waterMaterial: {fileID: 2100000, guid: c16826ca15a462f4c965f1e85a97e2c5, type: 2}

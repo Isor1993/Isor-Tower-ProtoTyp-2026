@@ -100,7 +100,7 @@ Material:
     - _FoamAmmount: 1
     - _FoamCutOff: 1
     - _FoamScale: 100
-    - _FoamSpeed: 1
+    - _FoamSpeed: 0.2
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
@@ -120,7 +120,7 @@ Material:
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
     - _Surface: 0
-    - _WaterDepth: 10
+    - _WaterDepth: 56.96
     - _WorkflowMode: 1
     - _XRMotionVectorsPass: 1
     - _ZWrite: 1
@@ -128,7 +128,7 @@ Material:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _DeepWater: {r: 0.108490534, g: 0.22917214, b: 1, a: 0.50980395}
-    - _Dir: {r: 0, g: -1, b: 0, a: 0}
+    - _Dir: {r: 1, g: 1, b: 0, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _FoamColor: {r: 1, g: 0.8941177, b: 0.882353, a: 1}
     - _ShallowWater: {r: 0.15566027, g: 0.7137217, b: 1, a: 0.2901961}

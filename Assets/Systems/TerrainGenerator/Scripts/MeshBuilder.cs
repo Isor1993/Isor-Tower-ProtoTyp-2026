@@ -62,17 +62,17 @@ public static class MeshBuilder
                 vertices[z * resolution + x] = new Vector3(x * spacing, heightmap[px, pz] * heightMultiplier, z * spacing);
 
                 // Neighbour heights in meters: left, right, down, up.
-                float hL = heightmap[px - 1, pz] * heightMultiplier;
-                float hR = heightmap[px + 1, pz] * heightMultiplier;
-                float hD = heightmap[px, pz - 1] * heightMultiplier;
-                float hU = heightmap[px, pz + 1] * heightMultiplier;
+                float heightLeft = heightmap[px - 1, pz] * heightMultiplier;
+                float heightRight = heightmap[px + 1, pz] * heightMultiplier;
+                float heightDown = heightmap[px, pz - 1] * heightMultiplier;
+                float heightUp = heightmap[px, pz + 1] * heightMultiplier;
 
                 // Normal from the slope to those neighbours (central
                 // difference): flat ground points up, a slope tilts it
                 // downhill. The ring gives both chunks identical neighbour
                 // heights at a shared border, so the border normal matches
                 // on both sides - no lighting seam.
-                normals[z * resolution + x] = new Vector3(hL - hR, 2f * spacing, hD - hU).normalized;
+                normals[z * resolution + x] = new Vector3(heightLeft - heightRight, 2f * spacing, heightDown - heightUp).normalized;
             }
         }
 
