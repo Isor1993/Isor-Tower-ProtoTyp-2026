@@ -93,6 +93,10 @@ public class TerrainConfig : ScriptableObject
     [Tooltip("Material for the water plane; leave empty to use the render pipeline's default material.")]
     [SerializeField] private Material _waterMaterial;
 
+    [Header("Placement")]
+    [Tooltip("Object types the placer scatters across the terrain.")]
+    [SerializeField] private Placeable[] _placeables;
+
     /// <summary>
     /// Remaps the normalized 0-1 heights after octave blending.
     /// </summary>
@@ -202,6 +206,11 @@ public class TerrainConfig : ScriptableObject
     /// Material for the water plane; null = pipeline default.
     /// </summary>
     public Material WaterMaterial => _waterMaterial;
+
+    /// <summary>
+    /// The object types the placer scatters across the terrain.
+    /// </summary>
+    public Placeable[] Placeables => _placeables;
 
     private void OnValidate()
     {
