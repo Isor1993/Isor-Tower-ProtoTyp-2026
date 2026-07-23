@@ -16,8 +16,10 @@
 * 19.07.2026 ER Added plateau settings (center, radius, blend, height)
 * 19.07.2026 ER Replaced heightmap resolution with chunk layout (chunks per edge, chunk resolution)
 * 20.07.2026 ER Added water settings (enabled, level, shore margin, material) and flood-warning validation
+* 23.07.2026 ER Added placement seed (independent of the terrain seed)
 ******************************************************************************/
 
+using System;
 using UnityEngine;
 
 /// <summary>
@@ -96,6 +98,8 @@ public class TerrainConfig : ScriptableObject
     [Header("Placement")]
     [Tooltip("Object types the placer scatters across the terrain.")]
     [SerializeField] private Placeable[] _placeables;
+    [Tooltip("Selects the object scatter; the same seed always produces the same placement. Separate from the terrain seed so the layout can be reshuffled without rebuilding the terrain.")]
+    [SerializeField] private int _placementSeed;
 
     /// <summary>
     /// Remaps the normalized 0-1 heights after octave blending.
@@ -211,6 +215,15 @@ public class TerrainConfig : ScriptableObject
     /// The object types the placer scatters across the terrain.
     /// </summary>
     public Placeable[] Placeables => _placeables;
+
+    /// <summary>
+    /// Selects the object scatter; same seed = same placement. Independent of
+    /// the terrain seed so placement can be reshuffled without a terrain rebuild.
+    /// </summary>
+    public int PlacementSeed => _placementSeed;
+
+
+
 
     private void OnValidate()
     {
