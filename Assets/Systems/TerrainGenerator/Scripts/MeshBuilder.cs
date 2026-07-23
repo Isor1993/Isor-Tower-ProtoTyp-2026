@@ -35,9 +35,7 @@ public static class MeshBuilder
     /// <returns>Mesh with vertices, triangles and analytic normals from height differences.</returns>
     public static Mesh Build(float[,] heightmap, float sizeInMeters, float heightMultiplier)
     {
-        // The heightmap carries a one-vertex ring for the border normals;
-        // the mesh covers only the inner grid, so subtract the two ring rows
-        // to get the real vertex count per edge.
+        // Drop the two ring rows; only the inner grid is meshed.
         int paddedResolution = heightmap.GetLength(0);
         int resolution = paddedResolution - 2;
         Vector3[] normals = new Vector3[resolution * resolution];
@@ -49,44 +47,30 @@ public static class MeshBuilder
 
         for (int z = 0; z < resolution; z++)
         {
-            
-
             for (int x = 0; x < resolution; x++)
             {
-                // Inner vertex (x,z) sits at padded index (px,pz): the +1
-                // skips the ring, so even edge vertices have all four
-                // neighbours available in the heightmap.
                 int px = x + 1;
                 int pz = z + 1;
 
                 vertices[z * resolution + x] = new Vector3(x * spacing, heightmap[px, pz] * heightMultiplier, z * spacing);
 
-                // Neighbour heights in meters: left, right, down, up.
                 float heightLeft = heightmap[px - 1, pz] * heightMultiplier;
                 float heightRight = heightmap[px + 1, pz] * heightMultiplier;
                 float heightDown = heightmap[px, pz - 1] * heightMultiplier;
                 float heightUp = heightmap[px, pz + 1] * heightMultiplier;
 
-                // Normal from the slope to those neighbours (central
-                // difference): flat ground points up, a slope tilts it
-                // downhill. The ring gives both chunks identical neighbour
-                // heights at a shared border, so the border normal matches
-                // on both sides - no lighting seam.
+                // Central-difference normal; shared ring heights keep borders seam-free.
                 normals[z * resolution + x] = new Vector3(heightLeft - heightRight, 2f * spacing, heightDown - heightUp).normalized;
             }
         }
 
-        // Loops run one short of resolution: cells sit between vertices,
-        // so a grid of n vertices per edge only has n-1 cells per edge.
         for (int z = 0; z < resolution - 1; z++)
         {
             for (int x = 0; x < resolution - 1; x++)
             {
                 int i = z * resolution + x;
 
-                // 6 entries per cell (2 triangles x 3 corners), each one an
-                // index into the vertex array. Corner order is clockwise
-                // seen from above so the faces point up (backface culling).
+                // Clockwise from above so the faces point up (backface culling).
                 triangles[triangleIndex + 0] = i;
                 triangles[triangleIndex + 1] = i + resolution;
                 triangles[triangleIndex + 2] = i + 1;
@@ -102,8 +86,7 @@ public static class MeshBuilder
         Mesh mesh = new Mesh();
         mesh.vertices = vertices;
         mesh.triangles = triangles;
-        // Our own normals instead of RecalculateNormals: that sees only one
-        // chunk's triangles and would leave a lighting seam at the borders.
+        // Analytic normals, not RecalculateNormals, to avoid a border seam.
         mesh.normals = normals;
         return mesh;
     }

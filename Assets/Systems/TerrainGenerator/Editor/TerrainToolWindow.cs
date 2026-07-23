@@ -17,7 +17,6 @@
 using UnityEngine;
 using UnityEditor;
 
-
 /// <summary>
 /// View of the terrain tool (MVP): draws the window, forwards clicks
 /// to the presenter and displays its status. Deliberately dumb -
@@ -30,6 +29,9 @@ public class TerrainToolWindow : EditorWindow
 
     private TerrainToolPresenter _presenter = new TerrainToolPresenter();
 
+    /// <summary>
+    /// Opens the Terrain Generator window from the Tools menu.
+    /// </summary>
     [MenuItem("Tools/Terrain Generator")]
     private static void ShowWindow()
     {

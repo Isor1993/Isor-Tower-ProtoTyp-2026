@@ -21,10 +21,9 @@
 using UnityEngine;
 
 /// <summary>
-/// Shared settings asset for the terrain pipeline. All consumers
-/// reference the same asset (one source of truth); multiple assets
-/// act as swappable presets. Code only reads - values are edited
-/// exclusively in the Inspector.
+/// Shared settings asset for the terrain pipeline. All consumers reference
+/// the same asset (one source of truth); multiple assets act as swappable
+/// presets. Code only reads - values are edited exclusively in the Inspector.
 /// </summary>
 [CreateAssetMenu(fileName = "TerrainConfig", menuName = "Terrain/Terrain Config")]
 public class TerrainConfig : ScriptableObject
@@ -36,7 +35,6 @@ public class TerrainConfig : ScriptableObject
     [Tooltip("Vertices per edge of a single chunk; adjacent chunks share their border row.")]
     [Range(2, 255)]
     [SerializeField] private int _chunkResolution = 129;
-
 
     [Header("Noise")]
     [Tooltip("Remaps the normalized 0-1 heights; bend the curve down to flatten valleys and emphasize peaks. Linear = no change.")]
@@ -95,82 +93,123 @@ public class TerrainConfig : ScriptableObject
     [Tooltip("Material for the water plane; leave empty to use the render pipeline's default material.")]
     [SerializeField] private Material _waterMaterial;
 
-
-
-
-    /// <summary>Remaps the normalized 0-1 heights after octave blending.</summary>
+    /// <summary>
+    /// Remaps the normalized 0-1 heights after octave blending.
+    /// </summary>
     public AnimationCurve HeightCurve => _heightCurve;
 
-    /// <summary>Zoom into the noise field; larger = wider hills.</summary>
+    /// <summary>
+    /// Zoom into the noise field; larger = wider hills.
+    /// </summary>
     public float NoiseScale => _noiseScale;
 
-    /// <summary>Number of noise layers stacked per point.</summary>
+    /// <summary>
+    /// Number of noise layers stacked per point.
+    /// </summary>
     public int Octaves => _octaves;
 
-    /// <summary>Amplitude falloff per octave (0-1).</summary>
+    /// <summary>
+    /// Amplitude falloff per octave (0-1).
+    /// </summary>
     public float Persistence => _persistence;
 
-    /// <summary>Frequency growth per octave.</summary>
+    /// <summary>
+    /// Frequency growth per octave.
+    /// </summary>
     public float Lacunarity => _lacunarity;
 
-    /// <summary>Selects the terrain; same seed = same heightmap.</summary>
+    /// <summary>
+    /// Selects the terrain; same seed = same heightmap.
+    /// </summary>
     public int Seed => _seed;
 
-    /// <summary>Edge length of the terrain in world units.</summary>
+    /// <summary>
+    /// Edge length of the terrain in world units.
+    /// </summary>
     public float SizeInMeters => _sizeInMeters;
 
-    /// <summary>Scales the 0-1 height values to meters.</summary>
+    /// <summary>
+    /// Scales the 0-1 height values to meters.
+    /// </summary>
     public float HeightMultiplier => _heightMultiplier;
 
-    /// <summary>Material for the generated terrain; null = pipeline default.</summary>
+    /// <summary>
+    /// Material for the generated terrain; null = pipeline default.
+    /// </summary>
     public Material TerrainMaterial => _terrainMaterial;
 
-    /// <summary>Plateau center along X, normalized 0-1.</summary>
+    /// <summary>
+    /// Plateau center along X, normalized 0-1.
+    /// </summary>
     public float PlateauCenterX => _plateauCenterX;
 
-    /// <summary>Plateau center along Z, normalized 0-1.</summary>
+    /// <summary>
+    /// Plateau center along Z, normalized 0-1.
+    /// </summary>
     public float PlateauCenterZ => _plateauCenterZ;
 
-    /// <summary>Width of the blend ring around the plateau.</summary>
+    /// <summary>
+    /// Width of the blend ring around the plateau.
+    /// </summary>
     public float PlateauBlend => _plateauBlend;
 
-    /// <summary>Target height of the flat area, 0-1.</summary>
+    /// <summary>
+    /// Target height of the flat area, 0-1.
+    /// </summary>
     public float PlateauHeight => _plateauHeight;
 
-    /// <summary>Radius of the flat area; 0 = plateau disabled.</summary>
+    /// <summary>
+    /// Radius of the flat area; 0 = plateau disabled.
+    /// </summary>
     public float PlateauRadius => _plateauRadius;
 
-    /// <summary>Chunks per edge of the square terrain.</summary>
+    /// <summary>
+    /// Chunks per edge of the square terrain.
+    /// </summary>
     public int ChunksPerEdge => _chunksPerEdge;
 
-    /// <summary>Vertices per edge of a single chunk.</summary>
+    /// <summary>
+    /// Vertices per edge of a single chunk.
+    /// </summary>
     public int ChunkResolution => _chunkResolution;
 
-    /// <summary>World size of one quad in meters, derived from size and chunk layout.</summary>
+    /// <summary>
+    /// World size of one quad in meters, derived from size and chunk layout.
+    /// </summary>
     public float MetersPerQuad => _sizeInMeters / (_chunksPerEdge * (_chunkResolution - 1));
 
-    /// <summary>Edge length of one chunk in world units.</summary>
+    /// <summary>
+    /// Edge length of one chunk in world units.
+    /// </summary>
     public float ChunkSizeInMeters => _sizeInMeters / _chunksPerEdge;
 
-    /// <summary>Master switch for the water plane; keeps the level while disabled.</summary>
+    /// <summary>
+    /// Master switch for the water plane; keeps the level while disabled.
+    /// </summary>
     public bool IsWaterEnabled => _isWaterEnabled;
 
-    /// <summary>Water surface height, normalized 0-1 (compared after the height curve).</summary>
+    /// <summary>
+    /// Water surface height, normalized 0-1 (compared after the height curve).
+    /// </summary>
     public float WaterLevel => _waterLevel;
 
-    /// <summary>Bare strip above the waterline (0-1) where the placement stage skips objects.</summary>
+    /// <summary>
+    /// Bare strip above the waterline (0-1) where the placement stage skips objects.
+    /// </summary>
     public float ShoreMargin => _shoreMargin;
 
-    /// <summary>Material for the water plane; null = pipeline default.</summary>
+    /// <summary>
+    /// Material for the water plane; null = pipeline default.
+    /// </summary>
     public Material WaterMaterial => _waterMaterial;
 
     private void OnValidate()
     {
-
-
         if (_plateauRadius > 0 && _waterLevel >= _plateauHeight)
         {
+#if UNITY_EDITOR
             Debug.LogWarning("Plateau height is at or below the water level - the village would be flooded!", this);
+#endif
         }
     }
 }

@@ -16,6 +16,7 @@
 * 19.07.2026 ER Plateau modifier hooked in between generator and mesh build
 * 19.07.2026 ER Chunk loop: full rebuild, one child object per chunk
 * 20.07.2026 ER Optional water plane added under the terrain root when enabled
+* 23.07.2026 ER Plateau now folded into HeightmapGenerator.SampleHeight; separate modifier call removed
 ******************************************************************************/
 
 using UnityEngine;
@@ -33,18 +34,27 @@ public class TerrainToolPresenter
     // Unity's built-in Plane primitive spans 10x10 units at scale 1.
     private const float PlanePrimitiveSizeInMeters = 10f;
 
-    /// <summary>Message the view displays below the buttons.</summary>
+    /// <summary>
+    /// Message the view displays below the buttons.
+    /// </summary>
     public string StatusMessage { get; private set; } = "";
 
-    /// <summary>True when generation is allowed. Pure query - the view
-    /// calls this every repaint, so it must not touch any state.</summary>
+    /// <summary>
+    /// True when generation is allowed. Pure query - the view calls this
+    /// every repaint, so it must not touch any state.
+    /// </summary>
+    /// <param name="config">Terrain settings asset to validate.</param>
+    /// <returns>True when a config is assigned.</returns>
     public bool CanGenerate(TerrainConfig config)
     {
         return config != null;
     }
 
-    /// <summary>Rebuilds the terrain: runs the pipeline once per chunk
-    /// and parents the chunk objects under one terrain root.</summary>
+    /// <summary>
+    /// Rebuilds the terrain: runs the pipeline once per chunk and parents
+    /// the chunk objects under one terrain root.
+    /// </summary>
+    /// <param name="config">Terrain settings asset driving the pipeline.</param>
     public void Generate(TerrainConfig config)
     {
         if (!CanGenerate(config))
@@ -54,8 +64,7 @@ public class TerrainToolPresenter
         }
         float chunkSizeInMeters = config.ChunkSizeInMeters;
 
-        // Full rebuild instead of reuse: a changed chunk count would
-        // otherwise leave stale chunk children behind.
+        // Full rebuild so a changed chunk count leaves no stale children.
         GameObject terrain = GameObject.Find(TerrainObjectName);
         if (terrain != null)
         {
@@ -63,9 +72,7 @@ public class TerrainToolPresenter
         }
         terrain = new GameObject(TerrainObjectName);
 
-        // Resolved once - all chunks share one material. Built-in defaults
-        // render magenta under URP, so the fallback asks the active render
-        // pipeline for its default material instead.
+        // The built-in default renders magenta under URP; fall back to the pipeline default.
         Material material = config.TerrainMaterial != null
             ? config.TerrainMaterial
             : GraphicsSettings.currentRenderPipeline.defaultMaterial;
@@ -74,9 +81,6 @@ public class TerrainToolPresenter
             for (int chunkX = 0; chunkX < config.ChunksPerEdge; chunkX++)
             {
                 float[,] heightmap = HeightmapGenerator.Generate(config, chunkX, chunkZ);
-
-                PlateauModifier.Apply(heightmap, config, chunkX, chunkZ);
-
                 Mesh mesh = MeshBuilder.Build(heightmap, chunkSizeInMeters, config.HeightMultiplier);
                 GameObject chunk = new GameObject($"Chunk_{chunkX}_{chunkZ}");
                 chunk.transform.SetParent(terrain.transform);
@@ -95,7 +99,9 @@ public class TerrainToolPresenter
         }
     }
 
-    /// <summary>Removes the generated terrain from the scene.</summary>
+    /// <summary>
+    /// Removes the generated terrain from the scene.
+    /// </summary>
     public void Clear()
     {
         GameObject terrain = GameObject.Find(TerrainObjectName);
@@ -110,9 +116,11 @@ public class TerrainToolPresenter
     }
 
 
-    /// <summary>Spawns the water plane as a child of the terrain root: a
-    /// single primitive scaled to the map, centered, and raised to the water
-    /// level in meters. Parented so Clear removes it with the terrain.</summary>
+    /// <summary>
+    /// Spawns the water plane as a child of the terrain root: a single
+    /// primitive scaled to the map, centered, and raised to the water level
+    /// in meters. Parented so Clear removes it with the terrain.
+    /// </summary>
     /// <param name="config">Terrain settings; supplies water level, size and material.</param>
     /// <param name="terrain">Terrain root the plane is parented under.</param>
     private void BuildWaterPlane(TerrainConfig config, GameObject terrain)
